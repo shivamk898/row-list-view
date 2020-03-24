@@ -1,0 +1,76 @@
+<html>
+        <head>
+            <title>Users</title>
+            <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        </head>
+        <body>
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Row and List Views</a>
+                  </div>
+                  <ul class="nav navbar-nav">
+                    <li class="active userview"><a href="#">Users</a></li>
+                  </ul>
+
+                  <button class="btn btn-primary row-view" style="margin:7px 0px 0px 200px">Row</button>
+                  <button class="btn btn-warning list-view" style="display:none; margin:7px 0px 0px 200px">List</button> 
+                  
+                  <!-- <button id="toggleDiv" onclick="toggle()">Some thing</button> -->
+                </div>
+              </nav>
+
+            <div id="main-container"></div>  
+
+            <script type="text/template" id="user-brick-template">
+                <div class="row">
+                    <% _.each(users, function(user) { %>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <ul class="list-group p-4">
+                            <li class="list-group-item active">
+                                Name: <%= user.name %>
+                            </li>
+                            <li class="list-group-item">
+                                Email: <%= user.email %>
+                            </li>
+                            <li class="list-group-item">
+                                PhoneNumber: <%= user.phone %>
+                            </li>
+                            <li class="list-group-item">
+                                Website: <%= user.website %>
+                            </li>
+                        </ul>
+                    </div>
+                    <% }) %>
+                </div>
+            </script>  
+
+            <script type="text/template" id="user-row-template">
+                <div class="row"> -->
+                    <% _.each(users, function(user) { %>
+                    <div class="card" style="padding:0 100px 0 100px; margin:auto">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item text-danger"><strong>Name: <%= user.name %></strong></li>
+                          <li class="list-group-item">Email: <%= user.email %></li>
+                          <li class="list-group-item"> PhoneNumber: <%= user.phone %></li>
+                          <li class="list-group-item"> Website: <%= user.website %></li>
+                        </ul>
+                    </div> -->
+                     <% }) %>
+                </div>
+            </script>
+            
+
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="lib/jquery.js"></script>
+            <script src="lib/underscore.js"></script>
+            <script src="lib/backbone.js"></script>
+            <script src="script.js"></script>
+        </body>
+</html>
+    
