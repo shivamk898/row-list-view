@@ -83,6 +83,14 @@ $(".userview").on('click' , function(){
     console.log("inside users now");    
 });
 
+$('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) 
+    var recipient = button.data('')
+	var modal = $(this)
+	modal.find('.modal-title').text('Stage Information')
+	modal.find('.modal-body input').val(recipient)
+  });
+
 // $(".list-view").on("click", myFunction);
 // function myFunction() {
 //     users.fetch().then(function(){

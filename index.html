@@ -15,7 +15,7 @@
                         <i class="glyphicon glyphicon-plus-sign"></i><br>
                         <span>New</span>
                       </a>
-
+                <!--add modal -->
                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
@@ -28,18 +28,34 @@
                             <div class="modal-body">
                               <form>
                                 <div class="form-group">
-                                  <label for="author-name" class="col-form-label">Name:</label>
-                                  <input type="text" class="form-control author-text">
+                                  <label for="author-name" class="col-form-label"> Stage Name*</label>
+                                  <input type="text" class="form-control author-text" placeholder="Enter Stage Name">
                                 </div> 
                               </form>
                             </div>
+                            
+                            <div id="workflow-scope" style="margin-left: 20px">
+                                <label for="wkf_status" data-lang="common_scope">Scope</label>                                
+                                <div>   
+                                    <span>
+                                        <input type="radio" name="wkf_status" id="wkf_radios_Global" value="Global" data-prop="Global">
+                                        <label class="radio-inline" for="wkf_radios_Global">Global</label>
+                                    </span><br>
+                                    <span>
+                                        <input type="radio" name="wkf_status" id="wkf_radios_Office" value="Office" data-prop="Office">
+                                        <label class="radio-inline" for="wkf_radios_Office">Office</label>
+                                    </span>                                    
+                                </div>                                
+                            </div>
+
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                              <button type="button" class="btn btn-primary add-modal">Add</button>
+                              <button type="button" class="btn btn-primary add-modal">Save</button>
                             </div>
                           </div>
                         </div>
                       </div>
+                    <!--add modal -->  
 
                       <a href="#" class="list-group-item top">
                         <i class="glyphicon glyphicon glyphicon-trash"></i><br>
