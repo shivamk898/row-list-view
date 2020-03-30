@@ -19,7 +19,7 @@ var User = Backbone.Model.extend({
 
 var Users = Backbone.Collection.extend({
     model: User, 
-    url: "https://jsonplaceholder.typicode.com/users"
+    url: "https://restcountries.eu/rest/v2/all"
 });
 
 var users = new Users();
@@ -49,10 +49,10 @@ var UserView = Backbone.View.extend({
     },
     render: function(){
         if(this.mode == true){
-            this.$el.html(this.template2({users: this.collection.toJSON()}));
+            this.$el.html(this.template2({users: this.collection.toJSON().filter((n,i)=>i<12)}));
         }
         else{
-            this.$el.html(this.template1({users: this.collection.toJSON()}));
+            this.$el.html(this.template1({users: this.collection.toJSON().filter((n,i)=>i<12)}));
         }
         var subView1 = new UserView({el: 'body'});
         var self = this;
@@ -69,7 +69,7 @@ var UserView1 = Backbone.View.extend({
     initialize: function(){        
     },
     render: function(){
-        let data = this.template1({users: this.collection.toJSON()});
+        let data = this.template1({users: this.collection.toJSON().filter((n,i)=>i<10)});
         this.$el.html(data);
         return this;
     }

@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+  }
+
+body{
+    background-color: #F5F5F5;
+}  
+.top{
+    display: inline-block;
+    text-align: center;
+    
+}
+
+.container-fluid{
+    background-color:#F5F5F5;
+}
+
+.glyphicon-align-justify{
+    margin: 3 3 3 3;
+}
+
+#main-container{
+    margin:0 50 0 50 ;
+}
