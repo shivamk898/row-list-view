@@ -83,6 +83,51 @@ $(".userview").on('click' , function(){
     console.log("inside users now");    
 });
 
+function search() { 
+    let input = document.getElementById('searchbar').value 
+    input=input.toLowerCase(); 
+    let x = document.getElementsByClassName('list-group'); 
+    for (i = 0; i < x.length; i++) {  
+        if (!x[i].innerHTML.toLowerCase().includes(input)) { 
+            x[i].style.display="none"; 
+        } 
+        else { 
+            x[i].style.display="";                  
+        } 
+    } 
+}
+
+
+const sort_by = (field, reverse, primer) => {
+
+    const key = primer ?
+      function(x) {
+        return primer(x[field])
+      } :
+      function(x) {
+        return x[field]
+      };
+  
+    reverse = !reverse ? 1 : -1;
+  
+    return function(a, b) {
+      return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+    }
+}
+
+function sortList(){
+    if (event.target.id === 'yes') {
+        users.sort(sort_by('population', true, parseInt));
+        console.log("sort by population");
+    }
+      
+    if (event.target.id === 'no') {
+        users.sort(sort_by('name', true))
+        console.log("sort by name");
+    }
+
+}
+
 $('#exampleModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) 
     var recipient = button.data('')
@@ -103,3 +148,4 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 //         $('.row-view').hide();  
 //     }
 // }
+

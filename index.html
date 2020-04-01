@@ -12,8 +12,10 @@
                 <div class="container-fluid">
                   <div class="navbar-header">
                       <a href="#" class="list-group-item top" data-toggle="modal" data-target="#exampleModal">
+                        <div class="hov">
                         <i class="glyphicon glyphicon-plus-sign"></i><br>
                         <span>New</span>
+                        </div>
                       </a>
                 <!--add modal -->
                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -55,11 +57,13 @@
                           </div>
                         </div>
                       </div>
-                    <!--add modal -->  
+                    <!--add modal end-->  
 
                       <a href="#" class="list-group-item top">
+                        <div class="hov">
                         <i class="glyphicon glyphicon glyphicon-trash"></i><br>
                         <span>Delete</span>
+                        </div>
                       </a> 
                     </div>
                 </div>
@@ -69,16 +73,13 @@
                         <ul class="nav navbar-nav">
                           <li class="active userview"><a href="#">Users</a></li>
                           <form class="navbar-form navbar-left">
-                            <div class="form-group">
-                              <input type="text" class="form-control" placeholder="Search">
-                            </div>
+                              <input type="text" class="form-control" id="searchbar" onkeyup="search()" placeholder="Search">
                           </form>
                           <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                              <li><a href="#">Action</a></li>
-                              <li><a href="#">Another action</a></li>
-                              <li><a href="#">Something else here</a></li>
+                              <li><a href="#"><button id="yes" onclick="sortList()">Name A-Z</button></a></li>
+                              <li><a href="#"><button id="no" onclick="sortList()">Name Z-A</button></a></li>
                             </ul>
                           </li>
                         </ul>
@@ -97,7 +98,7 @@
                 <div class="row">
                     <% _.each(users, function(user) { %>
                     <div class="col-sm-12 col-md-6 col-lg-4">
-                        <ul class="list-group p-4">
+                        <ul class="list-group p-4" id="id01">
                             <li class="list-group-item">
                                 Name: <%= user.name %>
                             </li>
@@ -122,9 +123,9 @@
                     <div class="card" style="padding:0 100px 0 100px; margin:auto">
                         <ul class="list-group list-group-flush">
                           <li class="list-group-item text-danger"><strong>Name: <%= user.name %></strong></li>
-                          <li class="list-group-item">Email: <%= user.email %></li>
-                          <li class="list-group-item"> PhoneNumber: <%= user.phone %></li>
-                          <li class="list-group-item"> Website: <%= user.website %></li>
+                          <li class="list-group-item">Capital: <%= user.capital %></li>
+                          <li class="list-group-item"> Dialing Code: <%= user.callingCodes[0] %></li>
+                          <li class="list-group-item">Population: <%= user.population.toLocaleString("en-US") %></li>
                         </ul>
                     </div> 
                      <% }) %>
