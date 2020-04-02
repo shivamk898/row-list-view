@@ -27,7 +27,7 @@ body{
     margin: 3 3 3 3;
 }
 
-#main-container{
+#main-container, #new-container{
     margin:0 50 0 50 ;
 }
 

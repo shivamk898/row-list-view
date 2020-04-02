@@ -1,16 +1,3 @@
-// var flag = 0;
-// function toggle(){
-// if(flag==0){
-//     $("#toggleDiv").text("row-view");
-//     flag=1;
-// }
-// else if(flag==1){
-//     $("#toggleDiv").text("list-view");
-//     flag=0;
-// }
-// }
-
-
 //Users
 var User = Backbone.Model.extend({
     initialize: function(){
@@ -24,6 +11,17 @@ var Users = Backbone.Collection.extend({
 
 var users = new Users();
 
+var Country = Backbone.Model.extend({
+	defaults: {
+		name: '',
+		capital: '',
+		dialing: '',
+		population:''
+	}
+});
+var Countries = Backbone.Collection.extend({});
+var countries = new Countries();
+
 var UserView = Backbone.View.extend({
     mode: true,
     el: "#main-container", 
@@ -33,7 +31,7 @@ var UserView = Backbone.View.extend({
     },
     events: {
         'click .list-view': 'myFunction',
-        'click .row-view': 'myFunction2'
+        'click .row-view': 'myFunction2',
     },
 	myFunction: function() {
         users.fetch().then(function(){
@@ -83,6 +81,71 @@ $(".userview").on('click' , function(){
     console.log("inside users now");    
 });
 
+//
+var CountryView = Backbone.View.extend({
+	model: new Country(),
+	initialize: function() {
+		this.template = _.template($('.country-list-template').html());
+	},
+	render: function() {
+		this.$el.html(this.template(this.model.toJSON()));
+		return this;
+	}
+});
+
+var CountriesView = Backbone.View.extend({
+	collection: countries,
+	el: "#new-container",
+	initialize: function() {
+		var self = this;
+		this.collection.on('add', this.render, this);
+	},
+	render: function() {
+		var self = this;
+		this.$el.html('');
+		_.each(this.collection.toArray(), function(country) {
+			self.$el.append((new CountryView({model: country})).render().$el);
+		});
+		return this;
+	}
+});
+
+var countriesView = new CountriesView();
+countriesView.render();
+
+$('.add-modal').on('click', function() {
+    var validate = function() {
+        if (
+          $(".name-text").val().length > 0 &&
+          $(".capital-text").val().length > 0 &&
+          $(".dialing-text").val().length > 0 &&
+          $(".population-text").val().length > 0
+        ) {
+          return true;
+        }
+        else{alert('Please fill all feilds')}
+      };
+    if (validate()) {
+    var country = new Country({
+        name : $('.name-text').val(),
+        capital : $('.capital-text').val(),
+        dialing : $('.dialing-text').val(),
+        population : $('.population-text').val()
+      });
+      console.log(country.toJSON());
+      countries.add(country);
+      $("#exampleModal").modal("hide");
+}
+});
+
+$('.modal').on('hide.bs.modal', function(){
+    $('.name-text').val('');
+    $('.capital-text').val('');
+    $('.dialing-text').val('');
+    $('.population-text').val('');
+});
+
+//
 function search() { 
     let input = document.getElementById('searchbar').value 
     input=input.toLowerCase(); 
@@ -96,7 +159,6 @@ function search() {
         } 
     } 
 }
-
 
 const sort_by = (field, reverse, primer) => {
 
@@ -136,16 +198,6 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 	modal.find('.modal-body input').val(recipient)
   });
 
-// $(".list-view").on("click", myFunction);
-// function myFunction() {
-//     users.fetch().then(function(){
-//     userView.render().$el;});
-//     $('.list-view').hide();
-//     $('.row-view').show();
-//     $(".row-view").on("click", myFunctions);
-//     function myFunctions(){
-//         $('.list-view').show();
-//         $('.row-view').hide();  
-//     }
-// }
+
+   
 
