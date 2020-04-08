@@ -6,17 +6,37 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
         <link rel="stylesheet" type="text/css" href="style.css">
         </head>
-        <body>
 
-            <nav class="navbar navbar-default" style="background-color:#F5F5F5">
+        <body>
+          <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li><a href="#" data-toggle="modal" data-target="#exampleModal">New <span class="sr-only">(current)</span></a></li>
+                  <li id="show"><a href="#">Delete</a></li>
+                <ul>         
+              </div>
+            </div>
+          </nav>
+
+            <nav class="navbar navbar-dark" style="background-color:#F5F5F5">
                 <div class="container-fluid">
                   <div class="navbar-header">
-                      <a href="#" class="list-group-item top" data-toggle="modal" data-target="#exampleModal">
+                      <!-- <a href="#" class="list-group-item top" data-toggle="modal" data-target="#exampleModal">
                         <div class="hov">
                         <i class="glyphicon glyphicon-plus-sign"></i><br>
                         <span>New</span>
                         </div>
-                      </a>
+                      </a> -->
                 <!--add modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -56,12 +76,34 @@
                   </div>
                     <!--add modal end-->  
 
-                      <a href="#" class="list-group-item top">
-                        <div class="hov">
+                      <!-- <a href="#" class="list-group-item top">
+                        <div class="hov" id="show">
                         <i class="glyphicon glyphicon glyphicon-trash"></i><br>
                         <span>Delete</span>
                         </div>
-                      </a> 
+                      </a> -->
+
+                      <a href="#" class="list-group-item top" id="hide" style="display:none">
+                        <div class="hov" >
+                        <i class="glyphicon glyphicon-remove-sign"></i><br>
+                        <span>Cancel</span>
+                        </div>
+                      </a>
+
+                      <a href="#" class="list-group-item top" id="hide2" style="display:none">
+                        <div class="hov">
+                        <i class="glyphicon glyphicon-remove-circle"></i><br>
+                        <span>Delete Selected</span>
+                        </div>
+                      </a>
+
+                      <a href="#" class="list-group-item top" id="hide3" style="display:none">
+                        <div>
+                        <input type="checkbox" onchange="checkAll(this)" name="chk[]" /><br>
+                        <span>Select All</span>
+                        </div>
+                      </a>
+
                     </div>
                 </div>
 
@@ -82,8 +124,8 @@
                         </ul>
                           
                         <ul class="nav navbar-nav navbar-right">                      
-                         <button class="btn btn-primary row-view" id="rrr" ><i class="glyphicon glyphicon-align-justify"></i></button>
-                         <button class="btn btn-warning list-view" id="lll" style="display:none"><i class="glyphicon glyphicon-th-large"></i></button> 
+                         <button class="btn btn-primary row-view"><i class="glyphicon glyphicon-align-justify"></i></button>
+                         <button class="btn btn-warning list-view" style="display:none"><i class="glyphicon glyphicon-th-large"></i></button> 
                         </ul>
                     </div>
                 </div>
@@ -94,10 +136,16 @@
 
             <script type="text/template" id="user-brick-template">
                     <% _.each(users, function(user) { %>
-                    <div class="col-sm-12 col-md-6 col-lg-4">
-                        <ul class="list-group p-4" id="id01">
+                    <div class="col-sm-12 col-md-6 col-lg-4 ">
+                        <ul class="list-group p-4 open" id="id01">
+                          <li class="list-group-item">
+                            <input type="checkbox" class="new" style="display:none"/>
+                          </li>
+                            <div id="" class="card-img-top">
+                              <img src="<%= user.flag %>" style="height: 50px; width:80px;" class="">
+                            </div>
                             <li class="list-group-item">
-                                Name: <%= user.name %>
+                              <strong>Name: <%= user.name %></strong>
                             </li>
                             <li class="list-group-item">
                                 Capital: <%= user.capital %>
@@ -118,6 +166,9 @@
                     <% _.each(users, function(user) { %>
                     <div class="card" style="padding:0 100px 0 100px; margin:auto">
                         <ul class="list-group list-group-flush">
+                          <li class="list-group-item">
+                            <input type="checkbox" class="new"  style="display:none"/>
+                          </li>
                           <li class="list-group-item text-danger"><strong>Name: <%= user.name %></strong></li>
                           <li class="list-group-item">Capital: <%= user.capital %></li>
                           <li class="list-group-item"> Dialing Code: <%= user.callingCodes[0] %></li>
@@ -129,7 +180,7 @@
             </script>
 
             <script type="text/template" class="country-list-template">
-              <% if (true) { %><div class="col-sm-12 col-md-6 col-lg-4">
+              <div class="col-sm-12 col-md-6 col-lg-4">
                 <ul class="list-group p-4">
                   <li class="list-group-item">
                     Name: <%= name %>
@@ -144,8 +195,25 @@
                     Population: <%= population %>
                   </li>
                 </ul>
-              </div><% }  %>
+              </div>
             </script>
+
+            <script type="text/template" id="country-template">
+              <div id="back"><i class="glyphicon glyphicon-arrow-left"></i></div><br>
+            <button>Add Step</button>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Step 1
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <h4>Add an action to this step</h4>
+                <li><button>Notify</button></li>
+                <li><button>Set Transaction Status</button></li>
+                <li><button>Apply Template</button></li>
+                <li><button>End Review Stage</button></li>
+              </ul>
+              
+            </div>
+          </script>
             
             <script src="lib/jquery.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

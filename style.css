@@ -3,10 +3,14 @@
   }
 
 body{
-    background-color: #F5F5F5;
+    background: linear-gradient(to right, rgb(104, 115, 151), rgb(129, 140, 115));
 }  
 .top{
     display: inline-block;
+    text-align: center;
+}
+
+.card-img-top{
     text-align: center;
 }
 
@@ -19,9 +23,14 @@ body{
     color: green;
 }
 
-.container-fluid{
-    background-color:#F5F5F5;
+.middle{
+    align-items: center;
 }
+
+/* .container-fluid{
+    background-color: #045de9;
+    background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+} */
 
 .glyphicon-align-justify{
     margin: 3 3 3 3;
@@ -37,9 +46,9 @@ body{
     transition: all 0.3s linear;
 }
 .list-group:hover {
-    -webkit-box-shadow:rgba(0,0,0,0.4) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
-    -moz-box-shadow:rgba(0,0,0,0.4) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
-    -o-box-shadow:rgba(0,0,0,0.4) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
-    box-shadow:rgba(0,0,0,0.4) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    -webkit-box-shadow:rgba(0,0,0,0.7) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    -moz-box-shadow:rgba(0,0,0,0.7) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    -o-box-shadow:rgba(0,0,0,0.7) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    box-shadow:rgba(0,0,0,0.7) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
 }
 

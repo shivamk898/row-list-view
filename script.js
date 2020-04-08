@@ -24,6 +24,7 @@ var countries = new Countries();
 
 var UserView = Backbone.View.extend({
     mode: true,
+    collection: users,
     el: "#main-container", 
     template1: _.template($('#user-row-template').html()),
     template2:_.template($('#user-brick-template').html()),
@@ -32,7 +33,18 @@ var UserView = Backbone.View.extend({
     events: {
         'click .list-view': 'myFunction',
         'click .row-view': 'myFunction2',
+        // "click .open": "onCardClick",
+        'click #hide2':'delete'
     },
+    delete: function(){
+        var items = $('input:checked');
+        items.closest('ul').remove();
+    },
+    // onCardClick: function(event){
+    //     var detailsView = new DetailsView({
+    //     });
+    //     $('#new-container').empty();
+    // },
 	myFunction: function() {
         users.fetch().then(function(){
         userView.render().$el;});
@@ -74,11 +86,26 @@ var UserView1 = Backbone.View.extend({
 });
 
 var userView1 = new UserView1({collection: users});
-users.fetch().then(function(){
-    userView.render().$el;});
+
+$("#hide").click(function(){
+    $(".new").hide();
+    $("#hide").hide();
+    $("#hide2").hide();
+    $("#hide3").hide();
+  });
+  
+  $("#show").click(function(){
+    $(".new").show();
+    $("#hide").show();
+    $("#hide2").show();
+    $("#hide3").show();
+  });
+
 
 $(".userview").on('click' , function(){
     console.log("inside users now");    
+    users.fetch().then(function(){
+        userView.render().$el;});
 });
 
 //
@@ -113,6 +140,27 @@ var CountriesView = Backbone.View.extend({
 var countriesView = new CountriesView();
 countriesView.render();
 
+var DetailsView = Backbone.View.extend({
+    el: "#main-container",
+    events: {
+        "click #back": "onClickBack"
+    },
+    onClickBack: function(){
+        $('#main-container').empty();
+        $('#new-container').empty();
+        var view_list = new UserView();
+    },
+    template: _.template($("#country-template").html()),
+    initialize: function(){
+        this.render()
+    },
+    render: function(){
+        this.$el.html(
+           this.template()
+        );
+    }
+});
+
 $('.add-modal').on('click', function() {
     var validate = function() {
         if (
@@ -145,7 +193,6 @@ $('.modal').on('hide.bs.modal', function(){
     $('.population-text').val('');
 });
 
-//
 function search() { 
     let input = document.getElementById('searchbar').value 
     input=input.toLowerCase(); 
@@ -161,7 +208,6 @@ function search() {
 }
 
 const sort_by = (field, reverse, primer) => {
-
     const key = primer ?
       function(x) {
         return primer(x[field])
@@ -190,11 +236,28 @@ function sortList(){
 
 }
 
+function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+             }
+         }
+     }
+ }
+
 $('#exampleModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) 
     var recipient = button.data('')
 	var modal = $(this)
-	modal.find('.modal-title').text('Stage Information')
+	modal.find('.modal-title').text('Add Country')
 	modal.find('.modal-body input').val(recipient)
   });
 
