@@ -1,6 +1,11 @@
-* {
+*{
     box-sizing: border-box;
-  }
+}
+
+.glyphicon-map-marker{
+      float: right;
+      font-size: 20px;
+}
 
 body{
     background: linear-gradient(to right, rgb(104, 115, 151), rgb(129, 140, 115));
@@ -23,9 +28,6 @@ body{
     color: green;
 }
 
-.middle{
-    align-items: center;
-}
 
 /* .container-fluid{
     background-color: #045de9;

@@ -5,8 +5,46 @@ var User = Backbone.Model.extend({
 });
 
 var Users = Backbone.Collection.extend({
-    model: User, 
-    url: "https://restcountries.eu/rest/v2/all"
+    model: User,  
+    url: "https://restcountries.eu/rest/v2/all",
+
+    initialize: function () {
+        // Default sort field and direction
+        this.sortField = "name";
+        this.sortDirection = "ASC";
+    },
+ 
+    setSortField: function (field, direction) {
+        this.sortField = field;
+        this.sortDirection = direction;
+    },
+ 
+    comparator: function (m) {
+        return m.get(this.sortField);
+    },
+ 
+    sortBy: function (iterator, context) {
+        var obj = this.models,
+            direction = this.sortDirection;
+ 
+        return _.pluck(_.map(obj, function (value, index, list) {
+            return {
+                value: value,
+                index: index,
+                criteria: iterator.call(context, value, index, list)
+            };
+        }).sort(function (left, right) {
+            // swap a and b for reverse sort
+            var a = direction === "ASC" ? left.criteria : right.criteria,
+                b = direction === "ASC" ? right.criteria : left.criteria;
+ 
+            if (a !== b) {
+                if (a > b || a === void 0) return 1;
+                if (a < b || b === void 0) return -1;
+            }
+            return left.index < right.index ? -1 : 1;
+        }), 'value');
+    }
 });
 
 var users = new Users();
@@ -34,7 +72,7 @@ var UserView = Backbone.View.extend({
         'click .list-view': 'myFunction',
         'click .row-view': 'myFunction2',
         // "click .open": "onCardClick",
-        'click #hide2':'delete'
+        'click #hide2':'delete',
     },
     delete: function(){
         var items = $('input:checked');
@@ -59,7 +97,7 @@ var UserView = Backbone.View.extend({
     },
     render: function(){
         if(this.mode == true){
-            this.$el.html(this.template2({users: this.collection.toJSON().filter((n,i)=>i<12)}));
+            this.$el.html(this.template2({users: this.collection.toJSON()}));
         }
         else{
             this.$el.html(this.template1({users: this.collection.toJSON().filter((n,i)=>i<12)}));
@@ -79,7 +117,7 @@ var UserView1 = Backbone.View.extend({
     initialize: function(){        
     },
     render: function(){
-        let data = this.template1({users: this.collection.toJSON().filter((n,i)=>i<10)});
+        let data = this.template1({users: this.collection.toJSON()});
         this.$el.html(data);
         return this;
     }
@@ -104,10 +142,26 @@ $("#hide").click(function(){
 
 $(".userview").on('click' , function(){
     console.log("inside users now");    
-    users.fetch().then(function(){
-        userView.render().$el;});
 });
 
+users.fetch().then(function(){
+    userView.render();});
+
+$(".byPopulation").on('click',function(){
+    users.fetch().then(function(){
+    users.setSortField("population", "DESC");
+    users.sort();
+    userView.render();});
+    console.log('sort by population');
+});
+
+$(".byName").on('click',function(){
+    users.fetch().then(function(){
+        users.setSortField("name", "DESC");
+        users.sort();
+        userView.render();});
+        console.log('sort by name');
+});
 //
 var CountryView = Backbone.View.extend({
 	model: new Country(),
@@ -140,26 +194,26 @@ var CountriesView = Backbone.View.extend({
 var countriesView = new CountriesView();
 countriesView.render();
 
-var DetailsView = Backbone.View.extend({
-    el: "#main-container",
-    events: {
-        "click #back": "onClickBack"
-    },
-    onClickBack: function(){
-        $('#main-container').empty();
-        $('#new-container').empty();
-        var view_list = new UserView();
-    },
-    template: _.template($("#country-template").html()),
-    initialize: function(){
-        this.render()
-    },
-    render: function(){
-        this.$el.html(
-           this.template()
-        );
-    }
-});
+// var DetailsView = Backbone.View.extend({
+//     el: "#main-container",
+//     events: {
+//         "click #back": "onClickBack"
+//     },
+//     onClickBack: function(){
+//         $('#main-container').empty();
+//         $('#new-container').empty();
+//         var view_list = new UserView();
+//     },
+//     template: _.template($("#country-template").html()),
+//     initialize: function(){
+//         this.render()
+//     },
+//     render: function(){
+//         this.$el.html(
+//            this.template()
+//         );
+//     }
+// });
 
 $('.add-modal').on('click', function() {
     var validate = function() {
@@ -207,8 +261,8 @@ function search() {
     } 
 }
 
-const sort_by = (field, reverse, primer) => {
-    const key = primer ?
+function sort_by(field, reverse, primer){
+    var key = primer ?
       function(x) {
         return primer(x[field])
       } :
@@ -217,24 +271,23 @@ const sort_by = (field, reverse, primer) => {
       };
   
     reverse = !reverse ? 1 : -1;
-  
+
     return function(a, b) {
       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
     }
 }
 
-function sortList(){
-    if (event.target.id === 'yes') {
-        users.sort(sort_by('population', true, parseInt));
-        console.log("sort by population");
-    }
+// function sortList(){
+//     if (event.target.id === 'yes') {
+//         users.sort(sort_by('population', true, parseInt));
+//         console.log("sort by population");
+//     }
       
-    if (event.target.id === 'no') {
-        users.sort(sort_by('name', true))
-        console.log("sort by name");
-    }
-
-}
+//     if (event.target.id === 'no') {
+//         users.sort(sort_by('name', true))
+//         console.log("sort by name");
+//     }
+// }
 
 function checkAll(ele) {
      var checkboxes = document.getElementsByTagName('input');
